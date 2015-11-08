@@ -1,13 +1,16 @@
-# Read the data
-data <- read.table("household_power_consumption.txt", header=TRUE, sep=";",
-stringsAsFactors=FALSE, na.strings=c("?"))
+# check if folder exists
+if (!file.exists('plots')) {
+  dir.create('plots')
+}
 
-# we only need data from two days
-sdata <- data[data$Date == "1/2/2007" | data$Date == "2/2/2007", ]
+# load data
+source('get_and_clean_data.R')
 
-png("plot1.png")
-hist(sdata$Global_active_power, 
-     xlab = "Global Active Power (kilowatts)",
-     main = "Global Active Power",
-     col = "red")
-dev.off()
+# open device
+png(filename='plots/plot1.png',width=480,height=480,units='px')
+
+# plot data
+hist(power.consumption$GlobalActivePower,main='Global Active Power',xlab='Global Active Power (kilowatts)',col='red')
+
+# Turn off device
+x<-dev.off()
